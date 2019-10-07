@@ -25,6 +25,22 @@ const useStyles = makeStyles(theme => ({
 
 export default function DialogSelect({handleNoEntry, competitions, handleMenuChanges}) {
   const classes = useStyles();
+
+  /* 
+    In hoooks you probably want to sepearte your state to primitives,
+    such as: 
+    
+    const [isOpen, setIsOpen] = React.useState(false);
+    const [league, setLeague] = React.useState('');
+    ...
+
+
+    That's in order to later make them re-usable as a function and for performence reason, 
+    since react does not need to do deep equality check inside the object 
+    and cause object spreading is costly (doing {...state} everytime)
+
+    NOT TOO CRITICAL
+  */
   const [state, setState] = React.useState({
     open: false,
     league: '',
@@ -37,10 +53,7 @@ export default function DialogSelect({handleNoEntry, competitions, handleMenuCha
   const handleChangeLeague = (event) => {
     setState({...state, 
       league: event.target.value.name,
-  //    competitionId: event.target.value.id,
-//      area: event.target.value.area
       });
-     console.log('event', event.target)
      console.log('renen', state.league)
      }
 
@@ -49,6 +62,23 @@ export default function DialogSelect({handleNoEntry, competitions, handleMenuCha
      }
 
   const handleClickOk = (event) => {
+   /* @TODO Using Boolean(...) isnt a mistake, but !state.league will lead to the same result 
+   // without a function call and without creating a all new variable which Boolean does.
+   
+   If you checking a boolean value is true or truthy, there is no need to equal it to true, 
+   cause the if statment will pass anyway. these too are the same: 
+   1. if (Boolean(state.league)) {} 
+   2. if (Boolean(state.league) == true)
+
+   they are evaluated as:
+   1. if (true) {}
+   2. if (true === true) {}
+   so you can see why there is no need to check the equality
+
+    NEVER USE == in JS no metter what, always make full equality check unless you want to cry at night 
+    looking for creepy bugs
+    Also again, no need for else after return
+    */
     if (Boolean(state.league) == true && Boolean(state.fixture) == true) {
      return handleMenuChanges({
             league:state.league,

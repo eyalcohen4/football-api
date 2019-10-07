@@ -4,8 +4,24 @@ import GameDisplayContainer from '../components/gamedisplay/gameDisplayContainer
 import CircularIndeterminate from '../components/loader/loader';
 import Container from '@material-ui/core/Container';
 
+/** @TODO Try to work with prettier, it'll give you a lot of points later for anyone who will see the code.
+ * Ive created a file named FootballApiPreety.js, take a look how much easier is to read the code :)
+ */
 
 class FootballAPI extends Component {
+	/* @TODO If there is no logic in the constructor and hes being used only to declare properties,
+	/* You can write your class like this:
+
+		class FootballAPI extends Component {
+			BASE_URL = 'http://api.football-data.org/v2';
+
+			state = {
+				property: 'value'
+			}
+		}
+
+	*/
+
  	constructor(props) {
  		super(props);
 		this.BASE_URL = 'http://api.football-data.org/v2';
@@ -16,9 +32,13 @@ class FootballAPI extends Component {
 			area: '',
 			competitionId: 0,
 			matches: [],
+			
+			// @TODO no PascalCase for object properties
 			CircularIndeterminate: false,
 			hasMenuChanged: false,
 			isPrams: true,
+			
+			// @TODO WAT
 			alert: {props}
 				 
 			//group-stage: 91
@@ -31,18 +51,21 @@ class FootballAPI extends Component {
 	}
 
 	async getCompetiotionsRaw() {
+		// @TODO can be a const
 		let rawCompetitions = [];
 		let competitions = [];
+
 		await this.showLoader();
    		const request = 
    			await fetch('http://api.football-data.org/v2/competitions', {
    				method: 'get', 
    				headers: {
-   					'Content-Type': 'application/json',
    					'X-Auth-Token': '8cd109a7cd8a4fd599ae76de90536c6a'
    				}
    			})
-   		const data = await request.json();
+		   const data = await request.json();
+		   
+		   // @TODO moving this part to a function will make this one more easy to read
    		rawCompetitions.push({ data });
    		//console.log('data', rawCompetitions[0].data.competitions);
    		await rawCompetitions[0].data.competitions.map((competition, i) => {
@@ -53,7 +76,9 @@ class FootballAPI extends Component {
    		}
    		})
    		//console.log(this.state.hasMenuChanged)
-   		//console.log('competition', competitions)
+		   //console.log('competition', competitions)
+		   
+		// @TODO no need for a function
    		this.setState(() => {
 			return {competitions: competitions};
 			})
@@ -62,6 +87,16 @@ class FootballAPI extends Component {
    		await this.hideLoader();
   	}
 
+
+	  /* @TODO Nice trick for show/hide (toggles):
+	  	toggleLoader = (isLoading = null) => {
+			  this.setState(state => ({
+				  isLoading: isLoading !== null ? isLoading : !state.isLoading
+			  }))
+		  }
+
+		if you dont understand this part let me know
+	  */
 	hideLoader = () => {
     	this.setState({ CircularIndeterminate: false });
   	}
@@ -133,6 +168,8 @@ class FootballAPI extends Component {
 		}
 
 	render() {
+		// @TODO The else is unnecessary since you returned here
+
 			if(this.state.CircularIndeterminate == true) {
 				return (
  					<div

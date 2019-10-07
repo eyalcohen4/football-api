@@ -1,0 +1,24 @@
+/* @TODO: https://codeguide.co/#css-declaration-order reorgnaize by decleration order */
+
+.footer {
+    flex-shrink: 0;
+    z-index: -1;
+    position: absolute;
+    bottom: 0px;
+    width: 100px;
+    background-color: #FF8855;
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    text-align: center;
+    clear: both;
+}
+
+.footer__title {
+    font-size: 3em;
+    font-family: 'Reenie Beanie'
+}
+
+.footer__powered-by {
+    font-weight: bold;
+}

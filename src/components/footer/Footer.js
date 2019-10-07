@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 
+// TODO: Extract the css to a file and give meaningful names to the classes (You can see exampe in StyledFooter.js)
 const Footer = () => {
 	return (
 		<footer
